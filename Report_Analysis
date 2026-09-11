@@ -1,0 +1,41 @@
+PCD Assignment 01 
+Down Sampling and Up Sampling
+
+Nama: Renata Ayu Sekar Kumala
+NIM: 25/557585/PA/23428
+
+1. Introduction
+Digital image sampling changes the spatial resolution of an image. Down sampling reduces the number of pixels, while up sampling increases the number of pixels by estimating additional values. The purpose of this experiment is to compare three down sampling methods: Max, Average, and Median and three up sampling methods: Nearest Neighbor, Bilinear, and Bicubic.
+
+Three grayscale input images with different characteristics were used: a smooth gradient, a high frequency checkerboard texture, and an edge rich image containing geometric shapes. A scale factor of 2 was used for both down sampling and up sampling.
+
+2. Down Sampling Results and Analysis
+In Max down sampling, each 2×2 neighborhood is represented by its largest pixel value. This method emphasizes bright regions. As a result, bright structures can become more dominant, and isolated bright pixels can have a strong effect on the output. It is useful when strong responses need to be retained, but it can exaggerate bright noise.
+
+Average down sampling calculates the mean of each 2×2 neighborhood. The output is generally smoother because local intensity variations are averaged. This makes it a good general-purpose reduction method, but fine details and sharp edges may become less distinct. The effect is particularly visible in high frequency patterns such as the checkerboard.
+
+Median down sampling selects the middle value after sorting the pixels in each neighborhood. It is less affected by isolated extreme values and is therefore useful for images containing impulse like noise. Compared with average down sampling, median filtering can preserve some boundaries more effectively, although the resulting appearance depends on the local pixel arrangement.
+
+The three methods therefore have different characteristics: Max emphasizes bright information, Average emphasizes smoothness, and Median emphasizes robustness to isolated intensity changes.
+
+3. Up Sampling Results and Analysis
+Nearest Neighbor up sampling assigns each new pixel the value of the nearest original pixel. It is computationally simple and does not create new intermediate intensity values, but the result commonly appears blocky, especially around diagonal or curved edges.
+
+Bilinear interpolation estimates new pixels using a weighted combination of neighboring pixels. Compared with Nearest Neighbor, it produces smoother transitions and reduces visible blockiness. The trade off is that edges may become softer.
+
+Bicubic interpolation uses a larger neighborhood and a cubic interpolation model. It generally produces smoother and more visually natural results than Nearest Neighbor and often preserves the visual appearance of edges better than Bilinear interpolation. However, it requires more computation and can sometimes produce small overshoots near very sharp intensity transitions.
+
+An important observation is that up sampling cannot restore information that was lost during down sampling. It only estimates values between the remaining samples. Therefore, an image that has already lost fine details cannot be perfectly reconstructed simply by increasing its resolution.
+
+4. Comparison by Image Characteristic
+For the smooth gradient image, Average down sampling produces a visually smooth result because neighboring pixels have similar values. The difference between interpolation methods is also relatively subtle because the original image has gradual intensity changes.
+
+For the high frequency checkerboard, down sampling has a much stronger effect. The result depends on the alignment between the sampling blocks and the repeating pattern. Average and Median can remove or weaken high frequency variation, while Max tends to preserve or emphasize bright cells. After up sampling, Nearest Neighbor makes the block structure obvious, while Bilinear and Bicubic create smoother transitions.
+
+For the edge rich image, Max can strengthen bright parts of edges and objects. Average makes edges softer, while Median can preserve boundaries while suppressing isolated extreme values. During up sampling, Nearest Neighbor creates jagged/blocky boundaries, Bilinear smooths the boundaries, and Bicubic generally provides the most visually refined result.
+
+5. Conclusion
+The experiment demonstrates that there is no single sampling method that is best for every image. For down sampling, Max is useful when strong bright responses are important, Average is a good general purpose choice for smooth reduction, and Median is useful when robustness to isolated noise is required. For up sampling, Nearest Neighbor is simple and preserves discrete values, Bilinear provides a good balance between quality and computational cost, and Bicubic generally gives the best visual quality among the tested interpolation methods.
+
+For general image-processing applications, Average down sampling followed by Bicubic up sampling is a reasonable combination when smooth visual quality is desired. However, the most appropriate method should always be selected according to the image characteristics and the purpose of the processing.
+
